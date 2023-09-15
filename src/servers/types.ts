@@ -1,3 +1,4 @@
+// NOTE: simple server interface to abstract away the implementation
 export interface Server {
-  start: (portNumber: number) => Promise<void>;
+  start: () => Promise<void>;
 }
