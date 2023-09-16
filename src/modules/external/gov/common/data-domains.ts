@@ -12,3 +12,8 @@ export interface ILocation {
   // TODO: convert this to camel case, and add a transformer
   label_location: ICoordinates;
 }
+
+export interface IError {
+  code: string;
+  message: string;
+}
