@@ -17,6 +17,11 @@ class NestjsServer implements Server {
   // TODO: use env config to control this
   async start() {
     const app = await this.factory.create(NestJSAppModule);
+    app.enableCors({
+      origin: ['http://localhost:3000'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+      credentials: true,
+    });
     await app.listen(appConfig.port);
   }
 }
