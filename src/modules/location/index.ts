@@ -1,0 +1,1 @@
+export { LocationModule } from './module';
