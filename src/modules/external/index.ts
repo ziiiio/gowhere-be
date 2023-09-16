@@ -1,3 +1,4 @@
-import { ExternalGovModule } from './gov';
+import { externalGovModule } from './gov';
+import { externalGoogleModules } from './google';
 
-export const externalModules = [...ExternalGovModule];
+export const externalModules = [...externalGovModule, ...externalGoogleModules];

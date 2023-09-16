@@ -1,0 +1,1 @@
+export { GeoCodeModule } from './module';
