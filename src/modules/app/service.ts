@@ -1,4 +1,6 @@
-// NOTE: might become more complicated when we have db or event emitters
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
 export class AppService {
   getHello(): string {
     return 'Hello World!';
