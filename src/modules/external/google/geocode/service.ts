@@ -3,16 +3,16 @@ import { AxiosApiClient } from '../../../../helpers/api-clients';
 import { GOOGLE_MAP_API_BASE_URL } from './constants';
 import { ExternalGooglePaths } from './enums';
 import { appConfig } from '../../../../configs/app-config';
-import { GeocodeResponse } from './data-domains';
+import { IGeocodeResponse } from './data-domains';
 
 @Injectable()
 export class GeoService {
   constructor(protected readonly apiClient: AxiosApiClient) {}
 
   async getLocation(
-    latitude: string,
-    longitude: string,
-  ): Promise<GeocodeResponse> {
+    latitude: string | number,
+    longitude: string | number,
+  ): Promise<IGeocodeResponse> {
     return this.apiClient.request(
       {
         method: 'GET',
@@ -26,7 +26,7 @@ export class GeoService {
       },
       (res) => {
         // NOTE: we might need a wrapper, can be unwieldy if we just do a cast
-        return res.data as GeocodeResponse;
+        return res.data as IGeocodeResponse;
       },
     );
   }

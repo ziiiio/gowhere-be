@@ -30,7 +30,7 @@ export interface IAddressWrapper {
   types: string[];
 }
 
-export interface GeocodeResponse {
+export interface IGeocodeResponse {
   plus_code: IPlusCode;
   status: string;
   results: IAddressWrapper[];

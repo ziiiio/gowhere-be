@@ -2,7 +2,7 @@ import { GeoService } from './service';
 import { Controller, Get, Query } from '@nestjs/common';
 import { API_VERSION, GEOCODE_PREFIX } from './constants';
 import { GooglePaths } from './enums';
-import { GeocodeResponse } from './data-domains';
+import { IGeocodeResponse } from './data-domains';
 
 @Controller({
   path: GEOCODE_PREFIX,
@@ -15,7 +15,7 @@ export class GeocodeController {
   async getForecasts(
     @Query('latitude') latitude: string,
     @Query('longitude') longitude: string,
-  ): Promise<GeocodeResponse> {
+  ): Promise<IGeocodeResponse> {
     return this.geoService.getLocation(latitude, longitude);
   }
 }
