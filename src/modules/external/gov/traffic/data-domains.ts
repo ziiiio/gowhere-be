@@ -1,4 +1,4 @@
-import { IApiInfo, ILocation } from '../common/data-domains';
+import { IApiInfo, ICoordinates } from '../common/data-domains';
 
 export interface IImageMetaData {
   height: number;
@@ -9,7 +9,7 @@ export interface IImageMetaData {
 export interface ICamera {
   timestamp: string;
   image: string;
-  location: ILocation;
+  location: ICoordinates;
   // TODO: convert these to camel case, and add a transformer
   camera_id: string;
   image_metadata: IImageMetaData;
