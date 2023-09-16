@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { GOV_API_BASE_URL } from '../common/constants';
+import { GOV_API_BASE_URL, httpsAgent } from '../common/constants';
 import { AxiosApiClient } from '../../../../helpers/api-clients';
 import { ExternalWeatherPaths } from './enums';
 import { IWeatherResponse } from './data-domains';
@@ -33,6 +33,7 @@ export class WeatherService {
         method: 'GET',
         url: `${GOV_API_BASE_URL}${ExternalWeatherPaths.FORECAST_2_HOURS}`,
         params: { date_time },
+        httpsAgent,
       },
       transformFunc,
     );

@@ -4,7 +4,7 @@ import { AxiosApiClient } from '../../../../helpers/api-clients';
 import { ExternalTrafficPaths } from './enums';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ITrafficResponse } from './data-domains';
-import { GOV_API_BASE_URL } from '../common/constants';
+import { GOV_API_BASE_URL, httpsAgent } from '../common/constants';
 import { AxiosResponse } from 'axios';
 import { IError } from '../common/data-domains';
 
@@ -34,6 +34,7 @@ export class TrafficService {
         method: 'GET',
         url: `${GOV_API_BASE_URL}${ExternalTrafficPaths.IMAGES}`,
         params: { date_time },
+        httpsAgent,
       },
       transformFunc,
     );
