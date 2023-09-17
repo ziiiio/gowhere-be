@@ -18,7 +18,7 @@ class NestjsServer implements Server {
   async start() {
     const app = await this.factory.create(NestJSAppModule);
     app.enableCors({
-      origin: ['http://localhost:3000'],
+      origin: ['http://localhost:3001'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true,
     });
