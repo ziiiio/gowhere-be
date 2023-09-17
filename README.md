@@ -45,6 +45,22 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+### Additional instructions
+
+You will need a .env file in the root directory of the project. This file should contain the following variables:
+```
+PORT=3000
+GOOGLE_MAPS_API_KEY="<THE KEY>"
+```
+Please obtain the api key from the code owner.
+
+### Docker
+
+Simply run `docker-compose -f docker-compose.local.yml up -d --build`
+(You will need the .env file as described above)
+
+The backend server will be listening at port **3001** by default.
+
 ## Test
 
 ```bash
