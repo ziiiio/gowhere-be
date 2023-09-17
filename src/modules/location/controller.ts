@@ -13,7 +13,7 @@ export class LocationController {
 
   @Get(LocationPaths.LOCATIONS)
   async getLocations(
-    @Query('date_time') date_time: string,
+    @Query('date_time') date_time?: string,
   ): Promise<TLocationResponse> {
     return this.locationService.getLocations(date_time);
   }

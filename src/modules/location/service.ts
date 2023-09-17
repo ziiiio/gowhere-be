@@ -3,6 +3,8 @@ import { TrafficService } from '../external/gov/traffic/service';
 import { WeatherService } from '../external/gov/weather/service';
 import { TLocationResponse } from './data-domains';
 import { PriorityQueue } from '../../helpers/data-structures/priority-queue/priority-queue';
+import { DateTimeFormatter, LocalDateTime } from '@js-joda/core';
+import { Locale } from '@js-joda/locale'; // Import the locale package
 
 @Injectable()
 export class LocationService {
@@ -11,9 +13,18 @@ export class LocationService {
     protected readonly weatherService: WeatherService,
   ) {}
 
-  async getLocations(date_time: string): Promise<any> {
-    const trafficLocations = await this.trafficService.getTraffic(date_time);
-    const weatherForecasts = await this.weatherService.getForecasts(date_time);
+  async getLocations(date_time?: string): Promise<any> {
+    let dateTime = date_time;
+    if (!dateTime) {
+      dateTime = LocalDateTime.now().format(
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").withLocale(
+          Locale.US,
+        ),
+      );
+    }
+
+    const trafficLocations = await this.trafficService.getTraffic(dateTime);
+    const weatherForecasts = await this.weatherService.getForecasts(dateTime);
     // NOTE: assume everything is in the first item
     const cameras = trafficLocations.items[0];
     const forecasts = weatherForecasts.items[0].forecasts;
