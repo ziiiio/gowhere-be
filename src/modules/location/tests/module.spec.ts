@@ -20,6 +20,11 @@ const mockDateTimeString = mockDateTime.format(
   DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").withLocale(Locale.US),
 );
 
+const mockDateTime2 = LocalDateTime.parse('2023-09-18T13:00:00');
+const mockDateTimeString2 = mockDateTime2.format(
+  DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").withLocale(Locale.US),
+);
+
 // NOTE: help from cgpt on writing parts of the tests
 describe('LocationService', () => {
   let locationService: LocationService;
@@ -275,7 +280,16 @@ describe('LocationService', () => {
       mockTrafficService.getTraffic.mockResolvedValue(trafficResponse);
       mockWeatherService.getForecasts.mockResolvedValue(weatherResponse);
 
-      await expect(locationService.getLocations()).resolves.toStrictEqual([]);
+      await expect(
+        locationService.getLocations(mockDateTimeString2),
+      ).resolves.toStrictEqual([]);
+
+      expect(mockTrafficService.getTraffic).toHaveBeenCalledWith(
+        mockDateTimeString2,
+      );
+      expect(mockWeatherService.getForecasts).toHaveBeenCalledWith(
+        mockDateTimeString2,
+      );
     });
 
     it('should skip item when camera api returns unexpected response for the locations item', async () => {
@@ -321,7 +335,15 @@ describe('LocationService', () => {
       mockTrafficService.getTraffic.mockResolvedValue(trafficResponse);
       mockWeatherService.getForecasts.mockResolvedValue(weatherResponse);
 
-      await expect(locationService.getLocations()).resolves.toStrictEqual([]);
+      await expect(
+        locationService.getLocations(mockDateTimeString2),
+      ).resolves.toStrictEqual([]);
+      expect(mockTrafficService.getTraffic).toHaveBeenCalledWith(
+        mockDateTimeString2,
+      );
+      expect(mockWeatherService.getForecasts).toHaveBeenCalledWith(
+        mockDateTimeString2,
+      );
     });
 
     it('should throw when forecast response has unexpected format', async () => {
@@ -365,6 +387,7 @@ describe('LocationService', () => {
       );
     });
 
+    // NOTE: these 2 cases should happen when we pass in a weird date_time
     it('should handle traffic api error gracefully', async () => {
       // Arrange: Mock external service responses to throw an error
       mockTrafficService.getTraffic.mockRejectedValue(
