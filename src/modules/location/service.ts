@@ -25,11 +25,12 @@ export class LocationService {
 
     const trafficLocations = await this.trafficService.getTraffic(dateTime);
     const weatherForecasts = await this.weatherService.getForecasts(dateTime);
+
     // NOTE: assume everything is in the first item
     const cameras = trafficLocations.items[0];
+
     const forecasts = weatherForecasts.items[0].forecasts;
     const readableLocations = weatherForecasts.area_metadata;
-
     if (forecasts.length !== readableLocations.length) {
       throw new Error(
         'Assumption is wrong, forecasts and readable locations do not match',
@@ -45,6 +46,10 @@ export class LocationService {
           label_location: { latitude: lat, longitude: lng },
         } = readableLocations[i];
 
+        if (!lat || !lng) {
+          continue;
+        }
+
         const distance =
           Math.pow(latitude - lat, 2) + Math.pow(longitude - lng, 2);
         // NOTE: keep the index, use distance as priority
@@ -58,12 +63,16 @@ export class LocationService {
       const {
         location: { latitude, longitude },
       } = camera;
+      if (!latitude || !longitude) {
+        continue;
+      }
 
       // NOTE: n should be constant, will incur log(n) operation as we heapify, hence nlog(n)
       // NOTE: get the first closest location, no need to pop, it will incur heapify operation
       const closestLocationIndex = getClosestLocationIndex(latitude, longitude);
       // NOTE: if no closest location, skip; since we can't display a friendly name anyways
-      if (!closestLocationIndex) {
+      // NOTE: make sure it is not 0, since 0 is a valid index
+      if (!closestLocationIndex && closestLocationIndex !== 0) {
         continue;
       }
 
